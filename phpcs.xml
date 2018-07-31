@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset name="Drupal PHPCS">
+    <description>Default PHP CodeSniffer configuration for drupal-behat-contexts.</description>
+
+    <file>./src</file>
+
+    <rule ref="./vendor/drupal/coder/coder_sniffer/Drupal">
+        <exclude name="Drupal.Commenting.DocComment.LongFullStop" />
+    </rule>
+    <rule ref="./vendor/drupal/coder/coder_sniffer/DrupalPractice" />
+
+    <arg value="p" />
+</ruleset>
