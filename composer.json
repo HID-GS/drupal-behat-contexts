@@ -1,0 +1,29 @@
+{
+  "name": "hid-gs/drupal-behat-contexts",
+  "description": "Provides additional step definitions for testing Drupal sites using the Behat Drupal Extension.",
+  "keywords": ["drupal", "behat", "contexts"],
+  "homepage": "https://github.com/HID-GS/drupal-behat-contexts",
+  "license": "GPL-2.0-or-later",
+  "authors": [
+    {
+      "name": "HID Global Services",
+      "email": "webmaster@hidglobal.com",
+      "homepage" : "https://www.hidglobal.com/"
+    }
+  ],
+  "require": {
+    "drupal/drupal-extension": "^3.1"
+  },
+  "require-dev": {
+    "drupal/coder": "^8.2"
+  },
+  "scripts": {
+    "cs-check": "vendor/bin/phpcs",
+    "cs-fix" : "vendor/bin/phpcbf"
+  },
+  "autoload": {
+    "psr-4": {
+      "Hid\\DrupalBehatContexts\\": "src/"
+    }
+  }
+}
