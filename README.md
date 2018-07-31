@@ -1,3 +1,30 @@
 # Drupal Behat Contexts
 
 Provides additional step definitions for testing Drupal sites using the [Behat Drupal Extension](https://www.drupal.org/project/drupalextension).
+
+## Installation
+
+Add the following to your `composer.json` file:
+
+``` json
+{
+  "require-dev": {
+    "hid-gs/drupal-behat-contexts": "^1.0"
+  }
+}
+```
+
+Then, update your dependencies by running `composer update hid-gs/drupal-behat-contexts`.
+
+## Configuration
+
+Once installed, add any of the contexts you want to use to your project's `behat.yml` file:
+
+``` yaml
+  default:
+    suites:
+      default:
+        contexts:
+          - Hid\DrupalBehatContexts\Context\ImageContext
+          - Hid\DrupalBehatContexts\Context\AjaxContext
+```
