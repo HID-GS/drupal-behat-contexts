@@ -1,0 +1,29 @@
+default:
+  suites:
+    default:
+      paths:
+        - ./features
+      contexts:
+        - Hid\DrupalBehatContexts\Context\ImageContext
+        - Hid\DrupalBehatContexts\Context\AjaxContext
+        - Drupal\DrupalExtension\Context\DrupalContext
+        - Drupal\DrupalExtension\Context\MinkContext
+        - Drupal\DrupalExtension\Context\MessageContext
+        - Drupal\DrupalExtension\Context\DrushContext
+  extensions:
+    Behat\MinkExtension:
+      goutte: ~
+      selenium2:
+        wd_host: http://browser:4444/wd/hub
+      base_url: http://drupal
+    Drupal\DrupalExtension:
+      blackbox: ~
+      api_driver: 'drupal'
+      drupal:
+        drupal_root: /var/www/html
+      region_map:
+        header: '#header'
+      selectors:
+        message_selector: '.messages'
+        error_message_selector: '.messages.messages--error'
+        success_message_selector: '.messages.messages--status'
