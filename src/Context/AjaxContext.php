@@ -19,7 +19,7 @@ class AjaxContext extends RawDrupalContext implements Context {
    */
   public function iWaitForAjaxToStart() {
     $time = 5000;
-    $this->getSession()->wait($time, '(jQuery.active !== 0');
+    $this->getSession()->wait($time, '(jQuery.active !== 0)');
   }
 
 }
