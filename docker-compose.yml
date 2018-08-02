@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+
+  db:
+    image: mariadb:10
+    volumes:
+      - dbdata:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=drupal
+      - MYSQL_DATABASE=drupal
+      - MYSQL_USER=drupal
+      - MYSQL_PASSWORD=drupal
+    restart: always
+
+  drupal:
+    depends_on:
+      - db
+      - browser
+    working_dir: /behat
+    volumes:
+      - webdata:/var/www
+      - .:/behat
+    image: drupal:8-apache
+    ports:
+      - 8080:80
+    restart: always
+
+  drush:
+    depends_on:
+      - drupal
+    volumes:
+      - webdata:/var/www:rw,nocopy
+    image: drush/drush:8-alpine
+
+  browser:
+    image: selenium/standalone-firefox:3.4
+    ports:
+      - 4444:4444
+
+volumes:
+  webdata:
+  dbdata:
