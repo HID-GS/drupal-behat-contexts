@@ -20,7 +20,8 @@
   },
   "scripts": {
     "cs-check": "vendor/bin/phpcs",
-    "cs-fix" : "vendor/bin/phpcbf"
+    "cs-fix" : "vendor/bin/phpcbf",
+    "behat" : "docker-compose exec -T drupal vendor/bin/behat -c behat.yml.dist"
   },
   "autoload": {
     "psr-4": {
