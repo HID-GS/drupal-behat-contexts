@@ -31,3 +31,39 @@ class YourContext extends RawDrupalContext implements Context {
 
 }
 ```
+
+## Testing
+
+### PHP Code Sniffer
+
+This repo adheres to Drupal's PHPCS rulesets.  To test your code, run the following:
+
+`composer cs-check` or `vendor/bin/phpcs`
+
+If there are issues, PHPCS might be able to autocorrect for you.
+
+`composer cs-fix` or `vendor/bin/phpcbf`
+
+### Behat
+
+Your custom step definitions should be tested in a feature. Since testing a feature requires a Drupal installation, this repo includes a Drupal stack that you can build if Docker is installed on your machine. To use:
+
+```
+docker-compose up
+```
+
+The site will be running at [http://localhost:8080](http://localhost:8080) and Selenium will be accessible at [http://localhost:4444/wd/hub](http://localhost:4444/wd/hub).
+
+```
+./scripts/site-install.sh
+```
+
+This will install Drupal for you.  You can skip this step if you installed Drupal previously.
+
+To run all Behat tests:
+
+```
+docker-compose exec -T drupal vendor/bin/behat -c behat.yml.dist
+```
+
+Alternately, you can run `composer behat` or `composer test` to run tests for both PHPCS and Behat.
