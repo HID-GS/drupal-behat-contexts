@@ -14,6 +14,7 @@ services:
     restart: always
 
   drupal:
+    image: drupal:8-apache
     depends_on:
       - db
       - browser
@@ -21,17 +22,16 @@ services:
     volumes:
       - webdata:/var/www
       - .:/behat
-    image: drupal:8-apache
     ports:
       - 8080:80
     restart: always
 
   drush:
+    image: drush/drush:8-alpine
     depends_on:
       - drupal
     volumes:
       - webdata:/var/www:rw,nocopy
-    image: drush/drush:8-alpine
 
   browser:
     image: selenium/standalone-firefox:3.4
