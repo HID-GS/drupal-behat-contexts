@@ -4,7 +4,6 @@ Feature: Test AjaxContext
   As a developer
   I need to use the step definitions of this context
 
-  @javascript
   Scenario: Test if HID Global's drivers search is working
     Given I am on "https://www.hidglobal.com/drivers"
     When I fill in "Search by product or keyword..." with "LINUX 32 BIT"
