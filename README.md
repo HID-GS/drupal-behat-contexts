@@ -9,12 +9,12 @@ Add the following to your `composer.json` file:
 ``` json
 {
   "require-dev": {
-    "hid-gs/drupal-behat-contexts": "^1.0"
+    "hidgweb/drupal-behat-contexts": "^1.0"
   }
 }
 ```
 
-Then, update your dependencies by running `composer update hid-gs/drupal-behat-contexts`.
+Then, update your dependencies by running `composer update hidgweb/drupal-behat-contexts`.
 
 ## Configuration
 

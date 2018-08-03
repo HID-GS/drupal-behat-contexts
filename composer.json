@@ -1,5 +1,5 @@
 {
-  "name": "hid-gs/drupal-behat-contexts",
+  "name": "hidgweb/drupal-behat-contexts",
   "description": "Provides additional step definitions for testing Drupal sites using the Behat Drupal Extension.",
   "keywords": ["drupal", "behat", "contexts"],
   "homepage": "https://github.com/HID-GS/drupal-behat-contexts",
