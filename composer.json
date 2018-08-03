@@ -21,7 +21,11 @@
   "scripts": {
     "cs-check": "phpcs",
     "cs-fix" : "phpcbf",
-    "behat" : "docker-compose exec -T drupal vendor/bin/behat -c behat.yml.dist"
+    "behat" : "docker-compose exec -T drupal vendor/bin/behat -c behat.yml.dist",
+    "test": [
+      "@cs-check",
+      "@behat"
+    ]
   },
   "autoload": {
     "psr-4": {
