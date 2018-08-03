@@ -35,8 +35,11 @@ services:
 
   browser:
     image: selenium/standalone-firefox:3.4
+    volumes:
+      - /dev/shm:/dev/shm
     ports:
       - 4444:4444
+    restart: always
 
 volumes:
   webdata:
