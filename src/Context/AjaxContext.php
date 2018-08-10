@@ -1,6 +1,6 @@
 <?php
 
-namespace Hid\DrupalBehatContexts\Context;
+namespace HidGlobal\DrupalBehatContexts\Context;
 
 use Behat\Behat\Context\Context;
 use Drupal\DrupalExtension\Context\RawDrupalContext;
