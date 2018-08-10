@@ -18,15 +18,6 @@
     "drupal/coder": "^8.2",
     "symfony/yaml": "^3.4.5"
   },
-  "scripts": {
-    "cs-check": "phpcs",
-    "cs-fix" : "phpcbf",
-    "behat" : "docker-compose exec -T drupal vendor/bin/behat -c behat.yml.dist",
-    "test": [
-      "@cs-check",
-      "@behat"
-    ]
-  },
   "autoload": {
     "psr-4": {
       "Hid\\DrupalBehatContexts\\": "src/"
