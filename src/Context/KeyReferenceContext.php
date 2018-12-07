@@ -1,5 +1,7 @@
 <?php
 
+namespace HidGlobal\DrupalBehatContexts\Context;
+
 /**
  * @file
  * KeyReferenceContext for OpenY project.
