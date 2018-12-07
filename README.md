@@ -27,4 +27,10 @@ Once installed, add any of the contexts you want to use to your project's `behat
         contexts:
           - HidGlobal\DrupalBehatContexts\Context\ImageContext
           - HidGlobal\DrupalBehatContexts\Context\AjaxContext
+          - HidGlobal\DrupalBehatContexts\Context\KeyReferenceContext
 ```
+
+## Credits
+
+KeyReferenceContext sourced from 
+https://raw.githubusercontent.com/Kerby70/openy/8.x-1.x/tests/features/bootstrap/OpenyDrupalContext.php
