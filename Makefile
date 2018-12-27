@@ -1,5 +1,5 @@
 DRUPAL_ROOT    := /var/www/html
-DRUPAL_PROFILE := standard
+DRUPAL_PROFILE := d8_profile
 
 NO_COLOR := \x1b[0m
 OK_COLOR := \x1b[33;11m
@@ -16,8 +16,12 @@ endef
 define install-drupal
 	@echo "Starting Drupal installation..."
 	@sleep 5
+	@docker-compose exec drupal \
+            	sh -c "cp -R profiles/$(DRUPAL_PROFILE) $(DRUPAL_ROOT)/profiles"
 	@docker-compose run --rm --no-deps drush \
-    	si -y standard \
+        	make -y --no-core $(DRUPAL_ROOT)/profiles/$(DRUPAL_PROFILE)/$(DRUPAL_PROFILE).make $(DRUPAL_ROOT)
+	@docker-compose run --rm --no-deps drush \
+    	si -y $(DRUPAL_PROFILE) \
         	--root=$(DRUPAL_ROOT) \
             --db-url=mysql://drupal:drupal@db/drupal \
             --site-name="Drupal Behat Contexts" \

@@ -1,0 +1,53 @@
+name: Drupal Behat Contexts
+description: >
+              A Drupal 8 installation profile for Drupal Behat Contexts.
+              Use to enable modules, create entities and setup necessary
+              configuration so that Behat features can be tested.
+
+type: profile
+core: 8.x
+
+dependencies:
+  # Core
+  - node
+  - history
+  - block
+  - breakpoint
+  - ckeditor
+  - color
+  - config
+  - comment
+  - contextual
+  - contact
+  - menu_link_content
+  - datetime
+  - block_content
+  - quickedit
+  - editor
+  - help
+  - image
+  - menu_ui
+  - options
+  - path
+  - page_cache
+  - dynamic_page_cache
+  - big_pipe
+  - taxonomy
+  - dblog
+  - search
+  - shortcut
+  - toolbar
+  - field_ui
+  - file
+  - rdf
+  - views
+  - views_ui
+  - tour
+  - automated_cron
+  # Contrib
+  - entity_reference_revisions
+  - paragraphs
+
+themes:
+  - bartik
+  - seven
