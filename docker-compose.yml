@@ -20,7 +20,7 @@ services:
       - browser
     working_dir: /behat
     volumes:
-      - webdata:/var/www
+      - webdata:/var/www/html
       - .:/behat
     ports:
       - 8080:80
@@ -31,7 +31,7 @@ services:
     depends_on:
       - drupal
     volumes:
-      - webdata:/var/www:rw,nocopy
+      - webdata:/var/www/html:rw,nocopy
 
   browser:
     image: selenium/standalone-firefox:3.4
