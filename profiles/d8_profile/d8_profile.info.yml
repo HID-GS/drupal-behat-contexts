@@ -45,6 +45,7 @@ dependencies:
   - tour
   - automated_cron
   # Contrib
+  - admin_toolbar
   - entity_reference_revisions
   - paragraphs
 
