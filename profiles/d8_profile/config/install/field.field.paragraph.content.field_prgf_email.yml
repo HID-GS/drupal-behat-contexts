@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_prgf_email
+    - paragraphs.paragraphs_type.content
+id: paragraph.content.field_prgf_email
+field_name: field_prgf_email
+entity_type: paragraph
+bundle: content
+label: Email
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: email

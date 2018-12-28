@@ -1,0 +1,8 @@
+langcode: en
+status: true
+dependencies: {  }
+id: content
+label: Content
+icon_uuid: null
+description: 'A dummy paragraph type for Behat testing.'
+behavior_plugins: {  }
