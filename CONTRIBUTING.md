@@ -68,3 +68,18 @@ When you have finished testing, stop all containers with:
 ```bash
 make stop
 ```
+
+### Drupal Installation Profile
+
+The `d8_profile` can be used to enable modules, create entities and setup necessary configuration so that new step definitions can be tested in Behat features.
+
+Let's say you want to write a step definition for a contrib module that adds a new field type. Eventually, you want to update the `d8_profile` with the contrib module and attach the field type to an entity. That way your step definition can be tested in a feature.
+
+The process to update the profile would be similar to this:
+
+1. Add the contrib module to `d8_profile.info.yml` and `d8_profile.make`.
+2. Restart the Drupal stack (`make clean` then `make start`) to confirm that the contrib module is downloaded and installed.
+3. Login to Drupal and add the field to an existing entity or to a new entity that you create.
+4. [Export site configuration changes](https://www.drupal.org/docs/8/configuration-management/managing-your-sites-configuration) and copy the config files to the profile's `config/install` directory.
+5. Remove `core.extension.yml` and UUIDs using the commands from the [Drupal documentation](https://www.drupal.org/node/2210443).
+6. Restart the Drupal stack again. You should now be able to test the new field in a feature.
