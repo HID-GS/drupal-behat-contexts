@@ -1,4 +1,5 @@
 <?php
+// @codingStandardsIgnoreFile
 
 namespace HidGlobal\DrupalBehatContexts\Context;
 
