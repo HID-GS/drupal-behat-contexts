@@ -393,7 +393,7 @@ class KeyReferenceContext extends RawDrupalContext implements Context {
       /** @var \Drupal\Core\Entity\EntityInterface $entity */
       foreach ($entities as $entity) {
         // Clean up the entity's alias, if there is one.
-        if (method_exists($entity, 'tourl')) {
+        if (method_exists($entity, 'tourl') && $entity->hasLinkTemplate('canonical')) {
           try {
             $path = '/' . $entity->toUrl()->getInternalPath();
             $alias = \Drupal::service('path.alias_manager')
