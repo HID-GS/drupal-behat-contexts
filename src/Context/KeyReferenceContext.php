@@ -13,10 +13,10 @@ use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\file\Entity\File;
 use Drupal\menu_link_content\Entity\MenuLinkContent;
-use Behat\Behat\Context\SnippetAcceptingContext;
+use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\TableNode;
 
-class KeyReferenceContext extends RawDrupalContext implements SnippetAcceptingContext {
+class KeyReferenceContext extends RawDrupalContext implements Context {
 
   /**
    * Entities by entity type and key.
