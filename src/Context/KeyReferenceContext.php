@@ -1,12 +1,6 @@
 <?php
-// @codingStandardsIgnoreFile
 
 namespace HidGlobal\DrupalBehatContexts\Context;
-
-/**
- * @file
- * KeyReferenceContext for OpenY project.
- */
 
 use Drupal\DrupalExtension\Context\RawDrupalContext;
 use Drupal\field\Entity\FieldStorageConfig;
@@ -16,6 +10,9 @@ use Drupal\menu_link_content\Entity\MenuLinkContent;
 use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\TableNode;
 
+/**
+ * Provides pre-built step definitions for interacting with entities.
+ */
 class KeyReferenceContext extends RawDrupalContext implements Context {
 
   /**

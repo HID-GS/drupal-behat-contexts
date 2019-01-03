@@ -6,7 +6,7 @@ use Behat\Behat\Context\Context;
 use Drupal\DrupalExtension\Context\RawDrupalContext;
 
 /**
- * Defines Ajax scenarios from the specific context.
+ * Provides pre-built step definitions for interacting with AJAX.
  */
 class AjaxContext extends RawDrupalContext implements Context {
 
