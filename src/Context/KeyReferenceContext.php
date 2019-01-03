@@ -27,9 +27,9 @@ class KeyReferenceContext extends RawDrupalContext implements Context {
 
   /**
    * Creates content of a given type provided in the form:
-   * | KEY         | title    | status | created           | field_reference_name |
-   * | my node key | My title | 1      | 2014-10-17 8:00am | text key             |
-   * | ...         | ...      | ...    | ...               | ...                  |
+   * | KEY         | title    | status | created           | field_reference |
+   * | my node key | My title | 1      | 2014-10-17 8:00am | text key        |
+   * | ...         | ...      | ...    | ...               | ...             |
    *
    * @Given I create :bundle content:
    */
@@ -115,7 +115,7 @@ class KeyReferenceContext extends RawDrupalContext implements Context {
   public function iCreateMenuLinkContent(TableNode $table) {
     $table_hash = $table->getHash();
 
-    foreach($table_hash as $link_hash) {
+    foreach ($table_hash as $link_hash) {
       if (empty($link_hash['title']) || empty($link_hash['uri']) || empty($link_hash['menu_name'])) {
         throw new \Exception("Menu title, uri, and menu_name are required.");
       }
@@ -167,17 +167,28 @@ class KeyReferenceContext extends RawDrupalContext implements Context {
   /**
    * Process fields from entity hash to allow referencing by key.
    *
-   * @param $entity_hash array
+   * @param array $entity_hash
    *   Array of field value pairs.
-   * @param $entity_type string
+   * @param string $entity_type
    *   String entity type.
+   *
+   * @throws \Exception
    */
-  protected function preProcessFields(&$entity_hash, $entity_type) {
+  protected function preProcessFields(array &$entity_hash, $entity_type) {
     foreach ($entity_hash as $field_name => $field_value) {
       // Get field info.
       $field_info = FieldStorageConfig::loadByName($entity_type, $field_name);
-      if ($field_info == NULL || !in_array(($field_type = $field_info->getType()), ['entity_reference', 'entity_reference_revisions', 'image', 'file'])) {
-        if (in_array($field_name, ['changed', 'created', 'revision_timestamp']) && !empty($field_value) && !is_numeric($field_value)) {
+      if ($field_info == NULL || !in_array(($field_type = $field_info->getType()), [
+        'entity_reference',
+        'entity_reference_revisions',
+        'image',
+        'file',
+      ])) {
+        if (in_array($field_name, [
+          'changed',
+          'created',
+          'revision_timestamp',
+        ]) && !empty($field_value) && !is_numeric($field_value)) {
           $entity_hash[$field_name] = strtotime($field_value);
         }
         continue;
@@ -194,8 +205,8 @@ class KeyReferenceContext extends RawDrupalContext implements Context {
           $value_id[] = $file->id();
         }
         else {
-          $entity_id = $this->getEntityIDByKey($value_or_key);
-          $entity_revision_id = $this->getEntityRevisionIDByKey($value_or_key);
+          $entity_id = $this->getEntityIdByKey($value_or_key);
+          $entity_revision_id = $this->getEntityRevisionIdByKey($value_or_key);
           if ($field_type == 'entity_reference') {
             // Set the target id.
             $value_id[] = $entity_id;
@@ -220,32 +231,36 @@ class KeyReferenceContext extends RawDrupalContext implements Context {
   /**
    * Create Nodes from bundle and TableNode column hash.
    *
-   * @param $bundle string
+   * @param string $bundle
    *   Bundle type id.
-   * @param $hash array
-   *   Table hash
+   * @param array $hash
+   *   Table hash.
    *
    * @return array
    *   Saved entities.
+   *
+   * @throws \Exception
    */
-  protected function createNodes($bundle, $hash) {
+  protected function createNodes($bundle, array $hash) {
     return $this->createEntities('node', $bundle, $hash);
   }
 
   /**
-   * Create Keyed Entities
+   * Create Keyed Entities.
    *
-   * @param $entity_type string
+   * @param string $entity_type
    *   Entity type id.
-   * @param $bundle string
+   * @param string $bundle
    *   Bundle type id.
-   * @param $hash array
-   *   Table hash
+   * @param array $hash
+   *   Table hash.
    *
    * @return array
    *   Saved entities.
+   *
+   * @throws \Exception
    */
-  protected function createEntities($entity_type, $bundle, $hash) {
+  protected function createEntities($entity_type, $bundle, array $hash) {
     $saved = [];
     foreach ($hash as $entity_hash) {
       $entity_storage = \Drupal::entityTypeManager()->getStorage($entity_type);
@@ -275,10 +290,10 @@ class KeyReferenceContext extends RawDrupalContext implements Context {
   /**
    * Saves entity by entity key.
    *
-   * @param $entity_key
-   *   Entity key value.
    * @param \Drupal\Core\Entity\EntityInterface $entity
    *   Entity object.
+   * @param string $entity_key
+   *   Entity key value.
    */
   protected function saveEntity(EntityInterface $entity, $entity_key = NULL) {
     $entity_type = $entity->getEntityTypeId();
@@ -293,8 +308,8 @@ class KeyReferenceContext extends RawDrupalContext implements Context {
   /**
    * Get entity by key from created test scenario entities.
    *
-   * @param $key string
-   *   Key string
+   * @param string $key
+   *   Key string.
    *
    * @return mixed|\Drupal\Core\Entity\EntityInterface
    *   Entity.
@@ -314,12 +329,15 @@ class KeyReferenceContext extends RawDrupalContext implements Context {
   /**
    * Get entity id by key.
    *
-   * @param $key string
+   * @param string $key
    *   Key string to lookup saved entity.
+   *
    * @return mixed
    *   Entity id.
+   *
+   * @throws \Exception
    */
-  protected function getEntityIDByKey($key) {
+  protected function getEntityIdByKey($key) {
     /* @var \Drupal\Core\Entity\EntityInterface $entity */
     if (($entity = $this->getEntityByKey($key)) != NULL) {
       return $entity->id();
@@ -329,12 +347,15 @@ class KeyReferenceContext extends RawDrupalContext implements Context {
   /**
    * Get entity revision id by key.
    *
-   * @param $key string
+   * @param string $key
    *   Key string to lookup saved entity.
+   *
    * @return mixed
    *   Entity revision id.
+   *
+   * @throws \Exception
    */
-  protected function getEntityRevisionIDByKey($key) {
+  protected function getEntityRevisionIdByKey($key) {
     /* @var \Drupal\Core\Entity\EntityInterface $entity */
     if (($entity = $this->getEntityByKey($key)) != NULL) {
       if (!method_exists($entity, 'getRevisionId')) {
@@ -350,6 +371,7 @@ class KeyReferenceContext extends RawDrupalContext implements Context {
    *
    * @param \Behat\Gherkin\Node\TableNode $table
    *   From pipe delimited table input.
+   *
    * @return array
    *   A TableNode column hash.
    */
@@ -375,7 +397,7 @@ class KeyReferenceContext extends RawDrupalContext implements Context {
    * @param \Drupal\Core\Entity\EntityInterface $entity
    *   Entity object.
    */
-  public function goToEntity($entity) {
+  public function goToEntity(EntityInterface $entity) {
     // Set internal browser on the node.
     $this->getSession()->visit($this->locatePath($entity->toUrl()->toString()));
   }
@@ -399,8 +421,9 @@ class KeyReferenceContext extends RawDrupalContext implements Context {
               \Drupal::service('path.alias_storage')
                 ->delete(['alias' => $alias]);
             }
-          } catch (Exception $e) {
-            // do nothing
+          }
+          catch (Exception $e) {
+            // Do nothing.
           }
         }
       }
@@ -421,10 +444,11 @@ class KeyReferenceContext extends RawDrupalContext implements Context {
   /**
    * Create test file from name, it may use a real file from the mink file_path.
    *
-   * @param $file_name string
+   * @param string $file_name
    *   A file name the may exist in the mink file_path folder.
    *
    * @return \Drupal\Core\Entity\EntityInterface|mixed|static
+   *   A test file.
    *
    * @throws \Exception
    */
@@ -434,7 +458,7 @@ class KeyReferenceContext extends RawDrupalContext implements Context {
     if ($this->getMinkParameter('files_path')) {
       $file_path = rtrim(realpath($this->getMinkParameter('files_path')), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $file;
       if (is_file($file_path)) {
-        if (! ($file_destination = @file_unmanaged_copy($file_path, $file_destination))) {
+        if (!($file_destination = @file_unmanaged_copy($file_path, $file_destination))) {
           $msg = 'File copy fail, "' . $file_path . '" to ' . $file_destination;
           throw new \Exception($msg);
         }
@@ -451,11 +475,12 @@ class KeyReferenceContext extends RawDrupalContext implements Context {
   }
 
   /**
+   * View node with query parameter.
+   *
    * @Given /^I view node "(?P<go_key>[^"]*)" with query parameter "(?P<param>[^"]*)" = id of "(?P<id_key>[^"]*)"$/
    * @Given /^I view entity "(?P<go_key>[^"]*)" with query parameter "(?P<param>[^"]*)" = id of "(?P<id_key>[^"]*)"$/
    */
-  public function iViewNodeWithQueryParameterIdOf($go_key, $param, $id_key)
-  {
+  public function iViewNodeWithQueryParameterIdOf($go_key, $param, $id_key) {
     $go_entity = $this->getEntityByKey($go_key);
     $id_entity = $this->getEntityByKey($id_key);
     $url = $go_entity->toUrl()->setRouteParameter($param, $id_entity->id());
@@ -463,7 +488,15 @@ class KeyReferenceContext extends RawDrupalContext implements Context {
   }
 
   /**
-   * Get cookie by name.
+   * Gets cookie by name.
+   *
+   * @param string $cookie_name
+   *   Name of cookie.
+   *
+   * @return array
+   *   Cookie attributes, such as name, value and expiration.
+   *
+   * @throws \Exception
    */
   protected function getCookieByName($cookie_name) {
     $driver = $this->getSession()->getDriver();
@@ -477,14 +510,19 @@ class KeyReferenceContext extends RawDrupalContext implements Context {
         return $cookie;
       }
     }
-    if (empty($has_cookie)) {
-      $msg = 'Cookie ' . $cookie_name . ' was not found.';
-      throw new \Exception($msg);
-    }
+    $msg = 'Cookie ' . $cookie_name . ' was not found.';
+    throw new \Exception($msg);
   }
 
   /**
+   * Checks if session has cookie.
+   *
+   * @param string $cookie_name
+   *   Name of cookie.
+   *
    * @Given /^I should have the cookie "(?P<cookie_name>[^"]*)"$/
+   *
+   * @throws \Exception
    */
   public function iShouldHaveTheCookie($cookie_name) {
     $cookie = $this->getSession()->getCookie($cookie_name);
@@ -495,7 +533,14 @@ class KeyReferenceContext extends RawDrupalContext implements Context {
   }
 
   /**
+   * Checks if session does not have cookie.
+   *
+   * @param string $cookie_name
+   *   Name of cookie.
+   *
    * @Given /^I should not have the cookie "(?P<cookie_name>[^"]*)"$/
+   *
+   * @throws \Exception
    */
   public function iShouldNotHaveTheCookie($cookie_name) {
     $cookie = $this->getSession()->getCookie($cookie_name);
@@ -506,7 +551,16 @@ class KeyReferenceContext extends RawDrupalContext implements Context {
   }
 
   /**
+   * Checks the expiration date of a cookie.
+   *
+   * @param string $cookie_name
+   *   Name of cookie.
+   * @param string $days
+   *   Number of days the cookie should expire.
+   *
    * @Given /^The cookie "(?P<cookie_name>[^"]*)" has expiration (\d+) days from now$/
+   *
+   * @throws \Exception
    */
   public function theCookieHasExpirationDaysFromNow($cookie_name, $days) {
     $cookie = $this->getCookieByName($cookie_name);
@@ -527,10 +581,19 @@ class KeyReferenceContext extends RawDrupalContext implements Context {
   }
 
   /**
+   * Checks if cookie is httpOnly.
+   *
+   * @param string $cookie_name
+   *   Name of cookie.
+   * @param string $bool_string
+   *   Denotes if cookie should be secure.
+   *
    * @Given /^The cookie "(?P<cookie_name>[^"]*)" httpOnly is "(?P<boolean_string>[^"]*)"$/
+   *
+   * @throws \Exception
    */
   public function theCookieHttpOnlyIs($cookie_name, $bool_string) {
-    $bool = filter_var(   $bool_string, FILTER_VALIDATE_BOOLEAN);
+    $bool = filter_var($bool_string, FILTER_VALIDATE_BOOLEAN);
     $cookie = $this->getCookieByName($cookie_name);
     $cookie_param = 'httpOnly';
     if (isset($cookie[$cookie_param])) {
@@ -547,10 +610,19 @@ class KeyReferenceContext extends RawDrupalContext implements Context {
   }
 
   /**
+   * Checks if cookie is secure.
+   *
+   * @param string $cookie_name
+   *   Name of cookie.
+   * @param string $bool_string
+   *   Denotes if cookie should be secure.
+   *
    * @Given /^The cookie "(?P<cookie_name>[^"]*)" secure is "(?P<boolean_string>[^"]*)"$/
+   *
+   * @throws \Exception
    */
   public function theCookieSecureIs($cookie_name, $bool_string) {
-    $bool = filter_var(   $bool_string, FILTER_VALIDATE_BOOLEAN);
+    $bool = filter_var($bool_string, FILTER_VALIDATE_BOOLEAN);
     $cookie = $this->getCookieByName($cookie_name);
     $cookie_param = 'secure';
     if (isset($cookie[$cookie_param])) {
@@ -567,11 +639,20 @@ class KeyReferenceContext extends RawDrupalContext implements Context {
   }
 
   /**
+   * Checks a cookie value for an ID.
+   *
+   * @param string $cookie_name
+   *   Name of cookie.
+   * @param string $key
+   *   Key string.
+   *
    * @Given /^The cookie "(?P<cookie_name>[^"]*)" value is the id of "(?P<key>[^"]*)"$/
+   *
+   * @throws \Exception
    */
   public function theCookieValueIsTheIdOf($cookie_name, $key) {
     $cookie = $this->getCookieByName($cookie_name);
-    $id = $this->getEntityIDByKey($key);
+    $id = $this->getEntityIdByKey($key);
     $cookie_param = 'value';
     if (!empty($cookie[$cookie_param])) {
       if ($cookie[$cookie_param] !== $id) {
