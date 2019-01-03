@@ -6,7 +6,7 @@ use Behat\Behat\Context\Context;
 use Drupal\DrupalExtension\Context\RawDrupalContext;
 
 /**
- * Defines image features from the specific context.
+ * Provides pre-built step definitions for interacting with images.
  */
 class ImageContext extends RawDrupalContext implements Context {
 
