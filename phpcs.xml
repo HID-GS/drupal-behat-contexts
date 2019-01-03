@@ -6,6 +6,8 @@
 
     <rule ref="./vendor/drupal/coder/coder_sniffer/Drupal">
         <exclude name="Drupal.Commenting.DocComment.LongFullStop" />
+        <exclude name="Drupal.Commenting.DocComment.ShortFullStop" />
+        <exclude name="Drupal.Commenting.DocComment.ShortSingleLine" />
     </rule>
     <rule ref="./vendor/drupal/coder/coder_sniffer/DrupalPractice" />
 
