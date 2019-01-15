@@ -7,6 +7,7 @@ default:
         - HidGlobal\DrupalBehatContexts\Context\ImageContext
         - HidGlobal\DrupalBehatContexts\Context\AjaxContext
         - HidGlobal\DrupalBehatContexts\Context\KeyReferenceContext
+        - HidGlobal\DrupalBehatContexts\Context\CookieContext
         - Drupal\DrupalExtension\Context\DrupalContext
         - Drupal\DrupalExtension\Context\MinkContext
         - Drupal\DrupalExtension\Context\MessageContext

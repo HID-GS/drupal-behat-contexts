@@ -30,6 +30,7 @@ Once installed, add any of the contexts you want to use to your project's `behat
           - HidGlobal\DrupalBehatContexts\Context\ImageContext
           - HidGlobal\DrupalBehatContexts\Context\AjaxContext
           - HidGlobal\DrupalBehatContexts\Context\KeyReferenceContext
+          - HidGlobal\DrupalBehatContexts\Context\CookieContext
 ```
 
 ## Credits
