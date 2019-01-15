@@ -14,7 +14,7 @@ services:
     restart: always
 
   drupal:
-    image: drupal:8-apache
+    build: .
     depends_on:
       - db
       - browser
