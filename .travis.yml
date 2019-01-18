@@ -4,6 +4,10 @@ language: php
 php:
   - 7.2
 
+cache:
+  directories:
+    - $HOME/.composer/cache/files
+
 before_install:
   - sudo /etc/init.d/postgresql stop
   - sudo service mysql stop
