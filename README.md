@@ -1,5 +1,6 @@
 # Drupal Behat Contexts
 
+[![Latest Stable Version](https://poser.pugx.org/hidgweb/drupal-behat-contexts/v/stable)](https://packagist.org/packages/hidgweb/drupal-behat-contexts)
 [![Build Status](https://travis-ci.org/HID-GS/drupal-behat-contexts.svg?branch=master)](https://travis-ci.org/HID-GS/drupal-behat-contexts)
 
 Provides additional step definitions for testing Drupal sites using the [Behat Drupal Extension](https://www.drupal.org/project/drupalextension).
