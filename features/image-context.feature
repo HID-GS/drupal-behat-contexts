@@ -6,6 +6,6 @@ Feature: Test ImageContext
 
   Scenario: Test that an image loads when creating an article
     When I am viewing an "article":
-      | title       | Behat rocks                        |
-      | field_image | http://via.placeholder.com/300x300 |
-    Then I should receive all images in the ".content" element
+      | title       | Behat rocks                            |
+      | field_image | http://via.placeholder.com/300x300.jpg |
+    Then I should receive all images in the ".node__content" element
