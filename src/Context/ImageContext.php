@@ -22,6 +22,24 @@ class ImageContext extends RawDrupalContext implements Context {
   }
 
   /**
+   * Gets the path to an image.
+   *
+   * @param object $image
+   *   Image being checked.
+   *
+   * @return string
+   *   The absolute URL of image.
+   */
+  public function getImageSrc($image) {
+    $src = $image->getAttribute('src');
+    if ($this->isRelative($src)) {
+      $src = $this->baseUrl . '/' . $src;
+    }
+
+    return $src;
+  }
+
+  /**
    * Checks if a URL is relative.
    *
    * @param string $url
@@ -71,13 +89,38 @@ class ImageContext extends RawDrupalContext implements Context {
       ->getPage()
       ->find('css', $element)
       ->findAll('css', 'img');
+
     foreach ($images as $image) {
-      $img_src = $image->getAttribute('src');
-      if ($this->isRelative($img_src)) {
-        $img_src = $this->baseUrl . '/' . $img_src;
-      }
-      $this->loadImage($img_src);
+      $path = $this->getImageSrc($image);
+      $this->loadImage($path);
     }
+  }
+
+  /**
+   * Checks that an image is on the page.
+   *
+   * Example: Then I should see the image "test.jpg"
+   * Example: And I should see the image "test.png"
+   *
+   * @param string $image_name
+   *   Passed from feature scenario.
+   *
+   * @throws \Exception
+   *   If image cannot be found.
+   *
+   * @Then I should see the image :image_name
+   */
+  public function iShouldSeeTheImage($image_name) {
+    $image = $this->getSession()
+      ->getPage()
+      ->find('css', "img[src*='$image_name']");
+
+    if (is_null($image)) {
+      throw new \Exception(sprintf('The image %s could not be found', $image_name));
+    }
+
+    $path = $this->getImageSrc($image);
+    $this->loadImage($path);
   }
 
 }
