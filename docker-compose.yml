@@ -26,13 +26,6 @@ services:
       - 8080:80
     restart: always
 
-  drush:
-    image: drush/drush:8-alpine
-    depends_on:
-      - drupal
-    volumes:
-      - webdata:/var/www/html:rw,nocopy
-
   browser:
     image: selenium/standalone-firefox:3.4
     volumes:
