@@ -7,10 +7,12 @@ OK_COLOR := \x1b[33;11m
 SUCCESS_MSG := $(OK_COLOR)** Drupal is up and running **$(NO_COLOR)
 
 define check-install
-	docker-compose run -T --rm drush \
-		status bootstrap \
+	docker-compose exec drupal \
+		vendor/bin/drush core-status \
 			--root=$(DRUPAL_ROOT) \
-  	| grep -q Successful; echo $$?
+			--fields=drupal-settings-file \
+			--field-labels=0 \
+  	| grep -q "settings.php"; echo $$?
 endef
 
 define install-drupal
@@ -18,10 +20,10 @@ define install-drupal
 	@sleep 5
 	@docker-compose exec drupal \
             	sh -c "cp -R profiles/$(DRUPAL_PROFILE) $(DRUPAL_ROOT)/profiles"
-	@docker-compose run --rm --no-deps drush \
-        	make -y --no-core $(DRUPAL_ROOT)/profiles/$(DRUPAL_PROFILE)/$(DRUPAL_PROFILE).make $(DRUPAL_ROOT)
-	@docker-compose run --rm --no-deps drush \
-    	si -y $(DRUPAL_PROFILE) \
+	@docker-compose exec drupal \
+        	vendor/bin/drush make -y --no-core $(DRUPAL_ROOT)/profiles/$(DRUPAL_PROFILE)/$(DRUPAL_PROFILE).make $(DRUPAL_ROOT)
+	@docker-compose exec drupal \
+    	vendor/bin/drush si -y $(DRUPAL_PROFILE) \
         	--root=$(DRUPAL_ROOT) \
             --db-url=mysql://drupal:drupal@db/drupal \
             --site-name="Drupal Behat Contexts" \
