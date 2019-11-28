@@ -7,7 +7,7 @@ OK_COLOR := \x1b[33;11m
 SUCCESS_MSG := $(OK_COLOR)** Drupal is up and running **$(NO_COLOR)
 
 define check-install
-	docker-compose exec drupal \
+	docker-compose run -T --rm drupal \
 		vendor/bin/drush core-status \
 			--root=$(DRUPAL_ROOT) \
 			--fields=drupal-settings-file \
