@@ -16,7 +16,9 @@
   },
   "require-dev": {
     "drupal/coder": "^8.3",
-    "drush/drush": "^8"
+    "drush/drush": "^8",
+    "masterminds/html5": "2.4",
+    "symfony/translation": "^3.4"
   },
   "autoload": {
     "psr-4": {
