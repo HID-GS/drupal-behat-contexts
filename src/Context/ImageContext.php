@@ -10,6 +10,11 @@ use Drupal\DrupalExtension\Context\RawDrupalContext;
  */
 class ImageContext extends RawDrupalContext implements Context {
 
+  /**
+   * Base URL from behat.yml.
+   *
+   * @var string
+   */
   private $baseUrl;
 
   /**
