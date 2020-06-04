@@ -12,12 +12,10 @@
     }
   ],
   "require": {
-    "drupal/drupal-extension": "^3.1"
+    "drupal/drupal-extension": "^4.1"
   },
   "require-dev": {
     "drupal/coder": "^8.3",
-    "symfony/yaml": "^3.4.5",
-    "symfony/translation": "^3.4.0",
     "drush/drush": "^8"
   },
   "autoload": {
