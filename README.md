@@ -12,7 +12,7 @@ Add the following to your `composer.json` file:
 ``` json
 {
   "require-dev": {
-    "hidgweb/drupal-behat-contexts": "^1.0"
+    "hidgweb/drupal-behat-contexts": "^2.0"
   }
 }
 ```
