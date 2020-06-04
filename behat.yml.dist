@@ -13,12 +13,13 @@ default:
         - Drupal\DrupalExtension\Context\MessageContext
         - Drupal\DrupalExtension\Context\DrushContext
   extensions:
-    Behat\MinkExtension:
-      files_path: %paths.base%/files
+    Drupal\MinkExtension:
+      files_path: '%paths.base%/files'
       goutte: ~
       selenium2:
         wd_host: http://browser:4444/wd/hub
       base_url: http://drupal
+      ajax_timeout: 5
     Drupal\DrupalExtension:
       blackbox: ~
       api_driver: 'drupal'
