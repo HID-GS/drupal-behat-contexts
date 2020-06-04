@@ -458,7 +458,8 @@ class KeyReferenceContext extends RawDrupalContext implements Context {
     if ($this->getMinkParameter('files_path')) {
       $file_path = rtrim(realpath($this->getMinkParameter('files_path')), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $file;
       if (is_file($file_path)) {
-        if (!($file_destination = @file_unmanaged_copy($file_path, $file_destination))) {
+        $file_system = \Drupal::service('file_system');
+        if (!($file_destination = $file_system->copy($file_path, $file_destination))) {
           $msg = 'File copy fail, "' . $file_path . '" to ' . $file_destination;
           throw new \Exception($msg);
         }
